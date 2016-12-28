@@ -23,9 +23,11 @@ static void print_animation(int h, int w) {
     int head_w = (w - max_sheet_w)/2;
 
     int cur = walk_animation.cur;
-    int idx = walk_animation.frames[cur].sheet;
-    for (int i = 0; i < nima_sheets[idx].count; i++) {
-        mvprintw(head_h + i, head_w, "%s", nima_sheets[idx].content[i]);
+    struct frame_t *frame = &walk_animation.frames[cur];
+    int idx = frame->sheet;
+    struct sheet *frame_sheet = &nima_sheets[idx];
+    for (int i = 0; i < frame_sheet->count; i++) {
+        mvprintw(head_h + i + frame->off_y, head_w + frame->off_x, "%s", frame_sheet->content[i]);
     }
 }
 static void update_animation() {
