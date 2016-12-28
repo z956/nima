@@ -8,23 +8,7 @@
 #include <string.h>
 
 #include "sheet.h"
-
-static int animation[] = {
-    LEFT_WALK1,
-    LEFT_WALK2,
-    LEFT_WALK1,
-    LEFT_WALK2,
-    LEFT_WALK1,
-    RIGHT_WALK1,
-    RIGHT_WALK2,
-    RIGHT_WALK1,
-    RIGHT_WALK2,
-    RIGHT_WALK1,
-    LEFT_WALK1,
-};
-static int animation_count = sizeof(animation) / sizeof(int);
-
-static int cur = 0;
+#include "walk_animation.h"
 
 static int check_hw(int h, int w) {
     return h >= limit_sheet_h && w >= limit_sheet_w;
@@ -37,7 +21,9 @@ static void print_warn(int h, int w) {
 static void print_animation(int h, int w) {
     int head_h = h - 2 - max_sheet_h;
     int head_w = (w - max_sheet_w)/2;
-    int idx = animation[cur];
+
+    int cur = walk_animation.cur;
+    int idx = walk_animation.frames[cur].sheet;
     for (int i = 0; i < nima_sheets[idx].count; i++) {
         mvprintw(head_h + i, head_w, "%s", nima_sheets[idx].content[i]);
     }
@@ -49,11 +35,11 @@ static void update_animation() {
     if (!check_hw(h, w)) {
         print_warn(h, w);
         //reset
-        cur = 0;
+        walk_animation.cur = 0;
     }
     else {
         print_animation(h, w);
-        cur = (cur + 1) % animation_count;
+        walk_animation.cur = (walk_animation.cur + 1) % walk_animation.count;
     }
     refresh();
 }
@@ -74,6 +60,7 @@ void start_animate() {
     FD_ZERO(&master);
     FD_SET(0, &master);
 
+    init_walk_animation();
     initscr();
     do {
         update_animation();

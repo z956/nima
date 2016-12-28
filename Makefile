@@ -9,7 +9,8 @@ LDFLAGS=-lncurses
 
 OBJS += $(SRC)/main.o \
 		$(SRC)/sheet.o \
-		$(SRC)/animation.o
+		$(SRC)/animation.o \
+		$(SRC)/walk_animation.o
 
 %.o : $(SRC)/%.c
 	@gcc -c $<
