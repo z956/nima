@@ -3,6 +3,7 @@ SRC=src
 INC=include
 
 CC=gcc
+STRIP=strip
 CFLAGS=-Wall -std=c99 -I$(INC)
 LDFLAGS=-lncurses
 
@@ -19,6 +20,7 @@ all: $(TARGET)
 $(TARGET): $(OBJS)
 	@echo "Start build $(TARGET)"
 	@$(CC) -o $@ $(OBJS) $(LDFLAGS)
+	@$(STRIP) $(TARGET)
 
 clean:
 	@echo "Clean build"

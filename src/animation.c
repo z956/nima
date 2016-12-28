@@ -9,14 +9,6 @@
 
 #include "sheet.h"
 
-enum {
-    LEFT_WALK1,
-    LEFT_WALK2,
-    RIGHT_WALK1,
-    RIGHT_WALK2,
-    END_ANIMATION,
-};
-
 static int animation[] = {
     LEFT_WALK1,
     LEFT_WALK2,

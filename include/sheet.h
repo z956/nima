@@ -1,6 +1,14 @@
 #ifndef _SHEET_H_
 #define _SHEET_H_
 
+enum {
+    LEFT_WALK1,
+    LEFT_WALK2,
+    RIGHT_WALK1,
+    RIGHT_WALK2,
+    END_SHEET,
+};
+
 struct sheet {
     int h;
     int w;
