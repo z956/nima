@@ -1,12 +1,26 @@
 TARGET=nima
-OBJS += main.c \
-		sheet.c \
-		animation.c
+SRC=src
+INC=include
+
+CC=gcc
+CFLAGS=-Wall -std=c99 -I$(INC)
+LDFLAGS=-lncurses
+
+OBJS += $(SRC)/main.o \
+		$(SRC)/sheet.o \
+		$(SRC)/animation.o
+
+%.o : $(SRC)/%.c
+	@gcc -c $<
 
 .PHONY: all clean
-all:
+
+all: $(TARGET)
+$(TARGET): $(OBJS)
 	@echo "Start build $(TARGET)"
-	@gcc -o $(TARGET) $(OBJS) -std=c99 -lncurses -Wall
+	@$(CC) -o $@ $(OBJS) $(LDFLAGS)
+
 clean:
 	@echo "Clean build"
+	@find . -name '*.o' | xargs rm -rf
 	@rm -f $(TARGET)
